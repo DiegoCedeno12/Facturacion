@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'factura',
     'crispy_forms',
     "crispy_bootstrap5",
+    'colorfield',
 ]
 
 LOGIN_URL = '/login/'
