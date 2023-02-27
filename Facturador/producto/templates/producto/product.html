@@ -1,0 +1,125 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Proveedores</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Lista de Proveedores</li>
+        </ol>
+
+        <div class="container-xxl mt-3 my-3">
+            <div class="card mt-3">
+                <div class="card-header mt-2" style="background: #ffffff;">
+                    <h3><i class="bi bi-inboxes"></i>&nbsp;Lista de Productos</h3>
+                  </div>
+                <div class="card-body">
+
+                    {% if not Products %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <strong>No hay Productos!</strong> ¿Deseas agregar un nuevo Producto?.
+                    </div>
+
+                    <div class="d-md-flex mb-1 justify-content-md-end">
+                        <a class="btn btn-info" href="{% url 'addProduct' %}" id="agregar"><i class="bi bi-plus-lg"></i> Agregar&nbsp;</a>
+                    </div>
+                    {% else %}
+                    <div class="table-responsive">
+                        <table class="table align-middle pt-3 py-3" id="datatablesSimple">
+                            <thead class="table align-middle cabecera">
+                                <tr>
+                                    <th scope="col" class="text-center">Proveedor</th>
+                                    <th scope="col" class="text-center">Codigo Principal</th>
+                                    <th scope="col" class="text-center">Codigo Auxiliar</th>
+                                    <th scope="col" class="text-center">Nombre</th>
+                                    <th scope="col" class="text-center">Cantidad</th>
+                                    <th scope="col" class="text-center">Precio</th>
+                                    <th scope="col" class="text-center">IVA</th>
+                                    <th scope="col" class="text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+
+                                {% for products in Products %}
+                                <tr>
+                                    <td class="text-center">{{ products.provider.name }}</td>
+                                    <td class="text-center">{{ products.master_code }}</td>
+                                    <td class="text-center">{{ products.auxiliary_code }}</td>
+                                    <td class="text-center">{{ products.name }}</td>
+                                    <td class="text-center">{{ products.stock }}</td>
+                                    <td class="text-center">${{ products.unit_price }}
+                                        </td>
+                                    <td class="text-center">{% if products.vat_rate == 1 %}
+                                        0%
+                                        {% elif products.vat_rate == 2 %}
+                                        12%
+                                        {% elif products.vat_rate == 3 %}
+                                        14%
+                                        {% elif products.vat_rate == 4 %}
+                                        No Objeto de Impuesto
+                                        {% elif products.vat_rate == 5 %}
+                                        Exento de IVA
+                                        {% endif %}</td>
+                                    <td>
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                            <a type="button"
+                                                onclick="editProduct('{{products.id}}', '{{ products.master_code }}', '{{ products.auxiliary_code }}', '{{ products.name }}', '{{ products.stock }}', '{{ products.unit_price }}', '{{ products.vat_rate }}')"
+                                                class="btn btn-primary" role="button" data-bs-toggle="modal"
+                                                data-bs-target="#editProduct" id="modificar"><i
+                                                    class="bi bi-pencil-square"></i></a>
+                                            <a type="button"
+                                                onclick="deteleProduct('{{ products.id }}', '{{ products.name }}')"
+                                                class="btn btn-danger" id="eliminar"><i class="bi bi-trash3"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+{% block modales %}
+{% include 'producto/modifyProduct.html' %}
+{% endblock modales %}
+
+{% block js %}
+<script>
+    function deteleProduct(id, name) {
+        Swal.fire({
+            "title": `¿Desea eliminar \n"${name}"?`,
+            "text": `Una vez eliminado no se puede recuperar\n ¿Quiere realizar esta acción?`,
+            "icon": "warning",
+            "showCancelButton": true,
+            "cancelButtonText": "No",
+            "confirmButtonText": "Si",
+            "reverseButtons": true,
+            "cancelButtonColor": "#0D6EFD",
+            "confirmButtonColor": "#DC3545"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/product/delete/" + id + "/"
+                }
+            })
+    }
+
+    function editProduct(id, Principal, auxiliar, nombre, stock, precio, iva) {
+        document.getElementById('id_product_editar').value = id;
+        document.getElementById('codigoPrincipalEdit').value = Principal;
+        document.getElementById('codigoAuxiliarEdit').value = auxiliar;
+        document.getElementById('NombreEdit').value = nombre;
+        document.getElementById('stockEdit').value = stock;
+        document.getElementById('precioUnitarioEdit').value = precio.replace(/,/g, ".");
+        document.getElementById('valorIvaEdit').value = iva;
+    }
+</script>
+{% endblock js %}

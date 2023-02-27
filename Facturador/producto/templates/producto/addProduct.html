@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Producto</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Agregar Producto</li>
+        </ol>
+        <div class="container-sm mt-5 my-3">
+            <div class="card mt-3">
+                <div class="card-header mt-2" style="background: #ffffff;">
+                    <h3><i class="bi bi-plus-lg"></i>&nbsp;Registrar Producto</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'addProduct' %}" method="post" class="row">
+                        {% csrf_token %}
+                        
+                        <div class="col-6 mb-3">
+                            <label for="Proveedor">Proveedor:</label>
+                            {{ addProduct.provider }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label for="principalCode">Codigo Principal:</label>
+                            {{ addProduct.master_code }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="secundarioCode">Codigo Auxiliar:</label>
+                            {{ addProduct.auxiliary_code }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="nombre">Nombre:</label>
+                            {{ addProduct.name }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="stock">Cantidad/Stock:</label>
+                            {{ addProduct.stock }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="precio">Precio Unitario:</label>
+                            {{ addProduct.unit_price }}
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="iva">IVA:</label>
+                            {{ addProduct.vat_rate }}
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a class="btn btn-secondary" role="button" type="reset" href="{% url 'product' %}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

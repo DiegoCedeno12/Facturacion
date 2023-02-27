@@ -1,0 +1,188 @@
+{% extends 'core/base.html' %}
+
+
+{% block css %}
+
+{% endblock css %}
+
+{% load static %}
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Factura</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Agregar Factura</li>
+        </ol>
+        <div class="container-sm mt-5 my-3">
+            <div class="card mt-3">
+                <div class="card-header mt-2 mb-3" style="background: #ffffff;">
+                    <h3><i class="bi bi-receipt-cutoff"></i>&nbsp;&nbsp;Emisión de Factura</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="row">
+                        {% csrf_token %}
+                        <div class="container-fluid border-top bloque p-3">
+                            <div style='height:20px;' class="mb-2">
+                                <p
+                                    style="color: #b1b4b8;margin-top:-27px;width: 178px;margin-left:17px;font-size:15px;background:white;">
+                                    Información de Factura</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputTipoComprobantes">Tipo de comprobante:</label>
+                                    {{ form.voucher_type }}
+                                </div>
+                                <input type="hidden" name="{{form.owner.name}}" value="{{ duenio.id }}">
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputRuc">Número de RUC:</label>
+                                    <input type="number" class="form-control" id="inputRuc" value="{{ duenio.ruc }}">
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputFechaEmision">Fecha de Emisión:</label>
+                                    {{ form.Broadcast_date }}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputTipoAmbiente">Tipo de ambiente:</label>
+                                    {{ form.environment_type }}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputSerie">Serie:</label>
+                                    {{ form.series }}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputNumComprobante">Número de Comprobante:</label>
+                                    {{form.voucher_number}}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputCodigoNumerico">Código Numérico:</label>
+                                    {{form.numeric_code}}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputTipoEmision">Tipo de Emisión:</label>
+                                    {{ form.emission_type }}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="inputDigitoVerificador">Dígito Verificador:</label>
+                                    {{ form.Check_digit }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-fluid border-top bloque p-3 mt-4">
+                            <div style='height:20px;' class="mb-3">
+                                <p
+                                    style="color: #b1b4b8;margin-top:-27px;width: 176px;margin-left:17px;font-size:15px;background:white;">
+                                    Información del cliente</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 mb-3">
+                                    <label for="identificacion">Identificacion:</label>
+                                    {{form.client_identification}}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="nombresApellidos">Nombres y apellidos o Razón social:</label>
+                                    {{form.client_social_reason}}
+                                </div>
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="coreoElectronico">Correo Electrónico:</label>
+                                    {{form.email_customer}}
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="Telefono">Telefono:</label>
+                                    {{form.customer_phone}}
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="Direccion">Dirección/Ubicación:</label>
+                                    {{form.customer_address}}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="container-fluid border-top bloque p-4 mt-4">
+                            <div style='height:20px;' class="mb-3">
+                                <p
+                                    style="color: #b1b4b8;margin-top:-33px;width: 79px;margin-left:17px;font-size:15px;background:white;">
+                                    Productos</p>
+                            </div>
+
+                            <div class="table-responsive">{{ formset.management_form }}
+                                <table class="table align-middle">
+                                    <thead class="table align-middle">
+                                        <tr>
+                                            <th scope="col" class="text-center">Producto</th>
+                                            <th scope="col" class="text-center">Precio Unitario</th>
+                                            <th scope="col" class="text-center">Cantidad</th>
+                                            <th scope="col" class="text-center">SubTotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        {% for form in formset %}
+                                        <tr>
+                                            <td class="text-center">{{ form.product }}</td>
+                                            <td>{{ form.unit_price }}</td>
+                                            <td>{{ form.quantity }}</td>
+                                            <td>{{ form.subtotal }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a class="btn btn-secondary" role="button" type="reset"
+                                href="{% url 'invoice' %}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+{% block js %}
+<script>
+    $(document).ready(function () {
+        $('.invoice-product').change(function () {
+            let productId = $(this).val();
+            var priceField = $(this).closest('.row').find(`#id_items-0-unit_price`);
+            var subtotal = $(this).closest('.row').find(`#id_items-0-subtotal`);
+            let cantidad = $(this).closest('.row').find(`#id_items-0-quantity`);
+            cantidad.val(1);
+            $.ajax({
+                url: '/get_product_price/',
+                data: {
+                    'product_id': productId
+                },
+                dataType: 'json',
+                success: function (data) {
+                    priceField.val(data.price);
+                    subtotal.val(data.price * cantidad.val())
+                    cantidad.change(function () {
+                        var valor = $(this).val();
+                        subtotal.val(data.price * valor)
+                    });
+                    
+                    console.log(priceField.val())
+                }
+            });
+        });
+    });
+</script>
+{% endblock js %}

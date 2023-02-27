@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Sistema de Facturacion</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Agregar Proveedor</li>
+        </ol>
+        <div class="container-sm mt-5 my-3">
+            <div class="card mt-3">
+                <div class="card-header mt-2" style="background: #ffffff;">
+                    <h3><i class="bi bi-plus-lg"></i>&nbsp;Registrar Proveedor</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'addProvider' %}" method="post" class="row">
+                        {% csrf_token %}
+                        <div class="col-6 mb-3">
+                            <label for="Identificacion">Identificación:</label>
+                            {{ addProvider.identify }}
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label for="Nombres">Nombre:</label>
+                            {{ addProvider.name }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="Telefono">Telefono/Celular:</label>
+                            {{ addProvider.cellPhone }}
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label for="Correo">Correo Electrónico:</label>
+                            {{ addProvider.email }}
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="Direccion">Dirección:</label>
+                            {{ addProvider.addres }}
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a class="btn btn-secondary" role="button" type="reset" href="{% url 'provider' %}">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

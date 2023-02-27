@@ -1,0 +1,32 @@
+<!--  Modal for edit  -->
+<div class="modal fade" id="editProveedor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-4" id="staticBackdropLabel"><i class="bi bi-person-plus"></i>&nbsp;&nbsp;Agregar
+          Cliente</h2>
+      </div>
+      <form action="{% url 'modifyProvider' %}" method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="hidden" id="id_provider_editar" name="id_provider_editar">
+          {% for field in editProvider %}
+          <div class="mb-3"> {{field.label}} <br>
+            {{ field }}</div>
+          {% for error in field.errors %}
+          <p class="alarma">{{error}}</p>
+          {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <p class="alarma">{{error}}</p>
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

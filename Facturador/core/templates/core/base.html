@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Inicio</title>
+    {%load static%}
+    <link href="{% static 'core/css/styles.css' %}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+    <!-- Styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+<!-- Or for RTL support -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.rtl.min.css" />
+    {% block css %}{% endblock css %}
+
+</head>
+
+<body class="sb-nav-fixed">
+
+    <div class="contenedor_loader">
+        <div class="loader"></div>
+    </div>
+
+    <nav class="sb-topnav navbar navbar-expand-lg sb-sidenav-light">
+        <div class="container-fluid">
+            <a class="navbar-brand mb-0 titulo" href="{% url 'home' %}">
+                <img src="{% static 'core/img/logo.png' %}" alt="logo" width="30" height="25"
+                    class="d-inline-block align-text-top">&nbsp;FAST FACT</a>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                <span class="navbar-text">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" aria-current="page"><i class="bi bi-person"></i>&nbsp;
+                                {{ user.username }} </a></li>
+                        <li class="nav-item"><a class="nav-link" id="salida" type="button"
+                                onclick="Salir('{{ user.username }}')">
+                                <i class="bi bi-box-arrow-in-right"></i>&nbsp; Salir</a>
+                        </li>
+                    </ul>
+                </span>
+            </div>
+        </div>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Principal</div>
+                        <a class="nav-link" href="{% url 'home' %}">
+                            <div class="sb-nav-link-icon"><i class="bi bi-house-door-fill"></i></div>
+                            Inicio
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Facturacion</div>
+                        <a class="nav-link collapsed" href="{% url 'home' %}" data-bs-toggle="collapse"
+                            data-bs-target="#collapseFactura" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="bi bi-receipt-cutoff"></i></div>
+                            Factura
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFactura" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'addInvoice' %}">
+                                    <div class="sb-nav-link-icon"><i class="bi bi-file-earmark-plus-fill"></i></div>
+                                    Emitir
+                                </a>
+                                <a class="nav-link" href="{% url 'invoice' %}">
+                                    <div class="sb-nav-link-icon"><i class="bi bi-receipt"></i></div>
+                                    Listar
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="sb-sidenav-menu-heading">Catalogo</div>
+                        <a class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseProductos"
+                            aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="bi bi-inboxes-fill"></i></div>
+                            Productos
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProductos" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'addProduct' %}">
+                                    <div class="sb-nav-link-icon"><i class="bi bi-clipboard-plus-fill"></i></div>
+                                    Agregar
+                                </a>
+                                <a class="nav-link" href="{% url 'product' %}">
+                                    <div class="sb-nav-link-icon"><i class="bi bi-boxes"></i></div>
+                                    Listar
+                                </a>
+                            </nav>
+                        </div>
+
+                        <a class="nav-link collapsed" href="inicio.html" data-bs-toggle="collapse"
+                            data-bs-target="#collapseProveedores" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="bi bi-box-seam-fill"></i></div>
+                            Proveedores
+                            <div class="sb-sidenav-collapse-arrow"><i class="bi bi-chevron-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseProveedores" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'addProvider' %}">
+                                    <div class="sb-nav-link-icon"><i class="bi bi-clipboard-plus-fill"></i></div>
+                                    Agregar
+                                </a>
+                                <a class="nav-link" href="{% url 'provider' %}">
+                                    <div class="sb-nav-link-icon"><i class="bi bi-boxes"></i></div>
+                                    Listar
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="sb-sidenav-menu-heading">Configuración</div>
+                        <a class="nav-link" href="{% url 'business' user.id %}">
+                            <div class="sb-nav-link-icon"><i class="bi bi-gear-fill"></i></div>
+                            Empresa
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!--  CONTENIDO  -->
+        <div id="layoutSidenav_content">
+            {% block content %}{% endblock content %}
+            {% block modales %}{% endblock modales %}
+
+            <footer class="py-3 bg-light mt-auto">
+                <div class="container-fluid px-3">
+                    <div class="d-flex align-items-center justify-content-end small">
+                        <div class="text-muted">Copyright &copy; Fast Fact 2023</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{% static 'core/js/scripts.js' %}"></script>
+    {% block js %}{% endblock js %}
+    <!-- SWEETALERT -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+    {% for m in messages %}
+    <script>
+        Swal.fire({
+            "text": "{{m}}",
+            "icon": "success",
+            "showConfirmButton": false,
+            "timer": "1800",
+        })
+    </script>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>
+<script>
+    $(document).ready(function () {
+        $('#datatablesSimple').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2({
+            theme: 'bootstrap-5'
+        });
+    });
+
+    function Salir(name) {
+        Swal.fire({
+            "title": `¿Cerrar Sesion para\n${name}?`,
+            "icon": "question",
+            'text': `Al dar click en salir, cerrará la sesión para ${name}`,
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Salir",
+            "reverseButtons": true,
+            "cancelButtonColor": "#6c757d",
+            "confirmButtonColor": "#0d6efd"
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'logout' %}"
+                }
+            })
+    }
+</script>

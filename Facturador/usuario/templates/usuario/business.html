@@ -1,0 +1,81 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Inicio</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Informacion de Empresa</li>
+        </ol>
+        <div class="container-xxl mt-3 my-4">
+            <div class="card mt-3">
+                <div class="card-header mt-2" style="background: #ffffff;">
+                    <h3><i class="bi bi-building-gear"></i>&nbsp;&nbsp;Configuracion de la empresa</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-sm-6 mt-4">
+                            <label for="ruc" class="form-label">Numero Ruc: </label>
+                            {{ business.ruc}}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="razonSocial" class="form-label">Razon Social:</label>
+                            {{ business.businessName }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="nombreComercial" class="form-label">Nombre Comercial:</label>
+                            {{ business.tradename }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="direccionEstablecimiento" class="form-label">Direccion del Establecimiento
+                                Matriz:</label>
+                            {{ business.establishmentAddress }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="direccionEmisor" class="form-label">Direccion del Establecimiento
+                                Emisor:</label>
+                            {{ business.senderAddress }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="codigoEmisor" class="form-label">Codigo del Establecimiento
+                                Emisor:</label>
+                            {{ business.IssuerCode }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="puntoEmision" class="form-label">Codigo del Punto de
+                                Emisión:</label>
+                            {{ business.EmissionPoint }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="contribuyenteEspecial" class="form-label">Contribuyente Especial
+                                (Número de Resolución):</label>
+                            {{ business.SpecialTaxpayer }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="llevarContabilidad" class="form-label">Obligado a llevar
+                                Contabilidad:</label>
+                            {{ business.Accounting }}
+                        </div>
+                        <div class="col-sm-6 mt-4">
+                            <label for="logoEmpresa" class="form-label">Logotipo de la Empresa:</label>
+                            {{ business.Logo }}
+                        </div>
+                        <div class=" mt-4">
+                            <label for="firmaElectronica" class="form-label">Firma Electronica (Archivo
+                                P12):</label>
+                            {{ business.ElectronicSignature }}
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a class="btn btn-secondary" role="button" type="reset" href="{% url 'home' %}">Cancelar</a>
+                            <button class="btn btn-primary" type="submit">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

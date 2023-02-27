@@ -1,0 +1,109 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Proveedores</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Lista de Proveedores</li>
+        </ol>
+
+        <div class="container-xxl mt-3 my-3">
+            <div class="card mt-3">
+                <div class="card-header mt-2" style="background: #ffffff;">
+                    <h3><i class="bi bi-inboxes"></i>&nbsp;Lista de Proveedores</h3>
+                </div>
+                <div class="card-body">
+
+                    {% if not Provider %}
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <strong>No hay Proveedores!</strong> ¿Deseas agregar un nuevo Proveedor?.
+                    </div>
+
+                    <div class="d-md-flex mb-1 justify-content-md-end">
+                        <a class="btn btn-info" href="{% url 'addProvider' %}" id="agregar"><i class="bi bi-plus-lg"></i> Agregar&nbsp;</a>
+                    </div>
+                    {% else %}
+                    <div class="table-responsive">
+                        <table class="table align-middle pt-3 py-3" id="datatablesSimple">
+                            <thead class="table align-middle cabecera">
+                                <tr>
+                                    <th scope="col" class="text-center">Identificacion</th>
+                                    <th scope="col" class="text-center">Nombre</th>
+                                    <th scope="col" class="text-center">Telefono/Celular</th>
+                                    <th scope="col" class="text-center">Correo Electrónico</th>
+                                    <th scope="col" class="text-center">Dirección</th>
+                                    <th scope="col" class="text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+
+                                {% for provider in Provider %}
+                                <tr>
+                                    <td class="text-center">{{ provider.identify }}</td>
+                                    <td class="text-center">{{ provider.name }}</td>
+                                    <td class="text-center">{{ provider.cellPhone }}</td>
+                                    <td class="text-center">{{ provider.email }}</td>
+                                    <td class="text-center">{{ provider.addres }}</td>
+                                    <td>
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                            <a type="button"
+                                                onclick="editProvider('{{provider.id}}', '{{ provider.identify }}', '{{ provider.name }}', '{{ provider.cellPhone }}', '{{ provider.email }}', '{{ provider.addres }}')"
+                                                class="btn btn-primary" role="button" data-bs-toggle="modal"
+                                                data-bs-target="#editProveedor" id="modificar"><i
+                                                    class="bi bi-pencil-square"></i></a>
+                                            <a type="button"
+                                                onclick="deteleProvider('{{ provider.id }}', '{{ provider.name }}')"
+                                                class="btn btn-danger" id="eliminar"><i class="bi bi-trash3"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+{% block modales %}
+{% include 'proveedor/modifyProvider.html' %}
+{% endblock modales %}
+
+{% block js %}
+<script>
+    function deteleProvider(id, name) {
+        Swal.fire({
+            "title": `¿Desea eliminar \n"${name}"?`,
+            "text": `Una vez eliminado no se puede recuperar\n ¿Quiere realizar esta acción?`,
+            "icon": "warning",
+            "showCancelButton": true,
+            "cancelButtonText": "Cancelar",
+            "confirmButtonText": "Eliminar",
+            "reverseButtons": true,
+            "cancelButtonColor": "#0D6EFD",
+            "confirmButtonColor": "#DC3545",
+        })
+            .then(function (result) {
+                if (result.isConfirmed) {
+                    window.location.href = "/provider/delete/" + id + "/"
+                }
+            })
+    }
+
+    function editProvider(id, Identificacion, Nombre, Telefono, Correo, Direccion) {
+        document.getElementById('id_provider_editar').value = id;
+        document.getElementById('identificacionEdit').value = Identificacion;
+        document.getElementById('nombreEdit').value = Nombre;
+        document.getElementById('telefonoEdit').value = Telefono;
+        document.getElementById('correoEdit').value = Correo;
+        document.getElementById('direccionEdit').value = Direccion;
+    }
+</script>
+{% endblock js %}

@@ -1,0 +1,35 @@
+
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background: linear-gradient(to right, #0852c2, #2064ca, rgb(52, 220, 250), #00b3ca/* #d2f9f5 #b7ffff */ );
+}
+
+.gradient-custom{
+    background-position: center center;
+  }
+  
+.boton, #boton{
+    background: #0852c2;
+    color: #ffffff;
+    font-size: 17px;
+    border: none;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.boton:hover, #boton:hover{
+    background: #b7ffff;
+    color: #00b3ca;
+    font-weight: bold;
+    border: 1px solid;
+    transition: all 0.8s;
+}
+  
+@media (max-width: 991) {
+    .imagen-login{
+        height: 4rem;
+    }
+}

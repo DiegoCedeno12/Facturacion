@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Inicio</h2>
+
+        <div class="container-xl my-5">
+            <div id="root">
+                <div class="container pt-5">
+                    <div class="row align-items-stretch justify-content-md-center">
+                        <div class="c-dashboardInfo col-lg-3 col-md-6">
+                            <div class="wrap">
+                                <span class="hind-font caption-12 c-dashboardInfo__count">
+                                        {{ providerCount }}
+                                </span>
+                                    <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                                        <i class="bi bi-box-seam"></i>
+                                        Proveedores
+                                    </h4>
+                            </div>
+                        </div>
+                        <div class="c-dashboardInfo col-lg-3 col-md-6">
+                            <div class="wrap">
+                                <span class="hind-font caption-12 c-dashboardInfo__count">
+                                        {{ productCount }}
+                                </span>
+                                    <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                                        <i class="bi bi-inboxes"></i>
+                                        Productos
+                                    </h4>
+                            </div>
+                        </div>
+                        
+                        <div class="c-dashboardInfo col-lg-3 col-md-6">
+                            <div class="wrap">
+                                <span class="hind-font caption-12 c-dashboardInfo__count">
+                                    {{ invoiceCount }}
+                                </span>
+                                    <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                                        <i class="bi bi-receipt"></i>
+                                        Facturas
+                                    </h4>
+                            </div>
+                        </div>
+                        <!--<div class="c-dashboardInfo col-lg-3 col-md-6">
+                            <div class="wrap">
+                                <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Rental
+                                    return</h4>
+                                    <span class="hind-font caption-12 c-dashboardInfo__count">6,40%</span>
+                            </div>
+                        </div>
+                        <div class="c-dashboardInfo col-lg-3 col-md-6">
+                            <div class="wrap">
+                                <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Rental
+                                    return</h4>
+                                    <span class="hind-font caption-12 c-dashboardInfo__count">6,40%</span>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

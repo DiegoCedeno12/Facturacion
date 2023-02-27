@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Factura{% endblock title %}
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <h2 class="mt-4">Facturas</h2>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+            <li class="breadcrumb-item active">Lista de Facturas</li>
+        </ol>
+        <div class="container-xxl mt-3 my-4">
+            <div class="card mt-3">
+                <div class="card-header mt-2" style="background: #ffffff;">
+                    <h3><i class="bi bi-receipt"></i>&nbsp;Lista de Facturas</h3>
+                </div>
+                <div class="card-body">
+
+                    {% if not factura %}
+
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <strong>No hay Facturas!</strong> ¿Deseas agregar un emitir una Factura?
+                    </div>
+
+                    <div class="d-md-flex mb-1 justify-content-md-end">
+                        <a class="btn btn-info" href="{% url 'addInvoice' %}" id="agregar"><i class="bi bi-plus-lg"></i>
+                            Agregar&nbsp;</a>
+                    </div>
+
+
+                    {% else %}
+
+                    <div class="table-responsive">
+                        <table class="table align-middle pt-3 py-3" id="datatablesSimple">
+                            <thead class="table align-middle cabecera">
+                                <tr>
+                                    <th scope="col" class="text-center">Codigo de Factura</th>
+                                    <th scope="col" class="text-center">Fecha de Emisión</th>
+                                    <th scope="col" class="text-center">Cliente</th>
+                                    <th scope="col" class="text-center">Total</th>
+                                    <th scope="col" class="text-center">Productos</th>
+                                    <th scope="col" class="text-center">Archios</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+
+
+                                {% for invoice  in factura %}
+
+                                <tr>
+                                    <td class="text-center">{{ invoice.voucher_number }}</td>
+                                    <td class="text-center">{{ invoice.Broadcast_date }}</td>
+                                    <td class="text-center">{{ invoice.client_social_reason}}</td>
+                                    <td class="text-center">{{ invoice.total_amount}}</td>
+                                    <td class="text-center">
+                                        <ul  class="navbar-nav">
+                                            {% for item in invoice.items.all %}
+                                                <li class="nav-item">{{ item.product.name }} (Cantidad: {{ item.quantity }}, Subtotal: {{ item.subtotal }})</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ invoice.xml_file.url}}" id="xml_button"><i class="bi bi-filetype-xml"></i></a>&nbsp;&nbsp;
+                                        <a href="{% url 'delInvoice' invoice.id  %}" id="xml_del"><i class="bi bi-trash3"></i></a></td>
+                                </tr>
+
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
